@@ -1,5 +1,15 @@
 "use strict";
 
+const $navSubmit = $("#nav-submit");
+
+$navSubmit.on("click", navOnSubmit);
+
+function navOnSubmit(evt) {
+  console.debug("navOnSubmit", evt);
+  evt.preventDefault();
+  $storyForm.show();
+}
+
 /******************************************************************************
  * Handling navbar clicks and updating navbar
  */

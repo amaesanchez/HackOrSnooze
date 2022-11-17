@@ -3,6 +3,22 @@
 // This is the global list of the stories, an instance of StoryList
 let storyList;
 
+$("#submit").on("click", addAndShowStoryOnSubmit);
+
+async function addAndShowStoryOnSubmit(evt) {
+  let newStory = {
+    title: $("#story-title").val(),
+    author: $("story-author").val(),
+    url: $("story-url").val()
+  };
+
+  let response = await axios.get(`${BASE_URL}/users/${currentUser.username}`,
+    {params:{token:currentUser.loginToken}});
+  let user = new User()
+}
+
+
+
 /** Get and show stories when site first loads. */
 
 async function getAndShowStoriesOnStart() {
