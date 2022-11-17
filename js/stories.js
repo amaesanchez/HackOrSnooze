@@ -6,15 +6,31 @@ let storyList;
 $("#submit").on("click", addAndShowStoryOnSubmit);
 
 async function addAndShowStoryOnSubmit(evt) {
+  evt.preventDefault();
   let newStory = {
     title: $("#story-title").val(),
-    author: $("story-author").val(),
-    url: $("story-url").val()
+    author: $("#story-author").val(),
+    url: $("#story-url").val()
   };
 
+  // not sure if currentUser.username is what's used here
   let response = await axios.get(`${BASE_URL}/users/${currentUser.username}`,
-    {params:{token:currentUser.loginToken}});
-  let user = new User()
+    {params:{token}});
+  console.log(response);
+
+  const userInfo = {
+    username: response.data.user.username,
+    name: response.data.user.name,
+    createdAt: response.data.user.createdAt,
+    favorites: response.data.user.favorites,
+    stories: response.data.user.stories
+  }
+
+  let user = new User(userInfo, token);
+
+  await storyList.addStory(user, newStory);
+
+  navAllStories(evt);
 }
 
 

@@ -1,6 +1,7 @@
 "use strict";
 
 const BASE_URL = "https://hack-or-snooze-v3.herokuapp.com";
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNoZWVzZSIsImlhdCI6MTY2ODcwNzc3MH0.WbagBZU4GNP-KFSsKKqVVor5QYLWAZDBYciZAHK0204"
 
 /******************************************************************************
  * Story: a single story in the system
