@@ -44,9 +44,18 @@
 
 <div class="container">
   <form id="story-form" class="hidden">
-    <input type="text" id="story-title" placeholder="Title">
-    <input type="text" id="story-author" placeholder="Author">
-    <input type="url" id="story-url" placeholder="URL ex: https://google.com">
+    <div id="title-form">
+      <label for="story-title">Title</label>
+      <input type="text" id="story-title" placeholder="Title">
+    </div>
+    <div id="author-form">
+      <label for="story-author">Author</label>
+      <input type="text" id="story-author" placeholder="Author">
+    </div>
+    <div id="url-form">
+      <label for="story-url">URL</label>
+      <input type="url" id="story-url" placeholder="Ex: https://google.com">
+    </div>
     <button id="submit">Submit</button>
   </form>
 </div>

@@ -2,13 +2,19 @@
 
 const $navSubmit = $("#nav-submit");
 
-$navSubmit.on("click", navOnSubmit);
+
+/** on click of submit link in navbar
+ * hides page components and reveals new story form
+ */
 
 function navOnSubmit(evt) {
   evt.preventDefault();
   hidePageComponents();
   $storyForm.show();
+  $allStoriesList.show();
 }
+
+$navSubmit.on("click", navOnSubmit);
 
 /******************************************************************************
  * Handling navbar clicks and updating navbar

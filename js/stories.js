@@ -3,37 +3,43 @@
 // This is the global list of the stories, an instance of StoryList
 let storyList;
 
-$("#submit").on("click", addAndShowStoryOnSubmit);
 
+/** gets story form data and prepends story to storylist
+ * and stories area in DOM
+ */
 async function addAndShowStoryOnSubmit(evt) {
   evt.preventDefault();
-  let newStory = {
+  const newStory = {
     title: $("#story-title").val(),
     author: $("#story-author").val(),
     url: $("#story-url").val()
   };
 
   // not sure if currentUser.username is what's used here
-  let response = await axios.get(`${BASE_URL}/users/${currentUser.username}`,
-    {params:{token}});
-  console.log(response);
+  // const response = await axios.get(`${BASE_URL}/users/${currentUser.username}`,
+  //   {params:{token}});
 
-  const userInfo = {
-    username: response.data.user.username,
-    name: response.data.user.name,
-    createdAt: response.data.user.createdAt,
-    favorites: response.data.user.favorites,
-    stories: response.data.user.stories
-  }
+  // const userInfo = {
+  //   username: response.data.user.username,
+  //   name: response.data.user.name,
+  //   createdAt: response.data.user.createdAt,
+  //   favorites: response.data.user.favorites,
+  //   stories: response.data.user.stories
+  // }
 
-  let user = new User(userInfo, token);
+  // const user = new User(userInfo, token);
 
-  await storyList.addStory(user, newStory);
+  const storyIns = await storyList.addStory(currentUser, newStory);
 
-  navAllStories(evt);
+  const $storyHTML = generateStoryMarkup(storyIns);
+
+  $allStoriesList.prepend($storyHTML);
+
+  $storyForm.hide();
+  $storyForm.trigger("reset");
 }
 
-
+$storyForm.on("submit", addAndShowStoryOnSubmit);
 
 /** Get and show stories when site first loads. */
 
