@@ -25,8 +25,9 @@ class Story {
   /** Parses hostname out of URL and returns it. */
 
   getHostName() {
-    // TODO: UNIMPLEMENTED: complete this function!
-    return "hostname.com";
+    const fullUrl = document.createElement("a");
+    fullUrl.href = this.url;
+    return fullUrl.hostname;
   }
 }
 
@@ -116,7 +117,27 @@ class User {
 
     // store the login token on the user so it's easy to find for API calls.
     this.loginToken = token;
+
   }
+
+  /** add favorite story to local favoite story list */
+ addFavorite(story) {
+
+
+
+    this.favorites.push(story);
+
+  }
+
+  // async function removeFavorite(story) {
+  //   // TODO: get index of favorite and remove from story list
+
+
+  // }
+
+
+
+
 
   /** Register new user in API, make User instance & return it.
    *

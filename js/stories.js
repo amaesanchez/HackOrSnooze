@@ -63,6 +63,7 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
+        <button type="button" class="favorite-button btn-light">a</button>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -88,3 +89,12 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+async function toggleFavorite(evt) {
+  evt.preventDefault();
+  console.log("evt.target", evt.target);
+  // currentUser.add()
+
+}
+
+$allStoriesList.on("click", "button", toggleFavorite);
