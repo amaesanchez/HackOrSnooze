@@ -49,7 +49,7 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
-        <button type="button" class="favorite-button btn-light">a</button>
+        <i class="bi bi-star"></i>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -84,17 +84,31 @@ function putStoriesOnPage() {
 // TODO: figure out how to get story ins from evt
 // TODO: figure out how to toggle between addFavorite() & removeFavorite()
 
-async function toggleFavorite(evt) {
+async function addToFavorite(evt) {
   evt.preventDefault();
-  console.log("storylist.stories", storyList.stories);
-  currentUser.addFavorite(storyList.stories[1])
+  const favoriteID = $(evt.target).parent().attr("id");
+  const favoriteStory = await Story.getFavoriteStory(favoriteID);
+  console.log("favoriteID", favoriteID);
+  currentUser.addFavorite(favoriteStory);
 
-  const $parent = $(evt.target).closest("li");
+}
+
+function handleFavorite(evt) {
+  evt.preventDefault();
+  showFavorite(evt);
+  addToFavorite(evt);
+
+}
+
+function showFavorite(evt) {
+  evt.target.classList.remove("bi-star");
+  evt.target.classList.add("bi-star-fill");
+  const $parent = $(evt.target).closest("li").clone();
   console.log($parent);
   $allFavoritesList.append($parent);
 }
 
-$allStoriesList.on("click", "button", toggleFavorite);
+$allStoriesList.on("click", "i", handleFavorite);
 
 
 /** TODO: create function to add stories to mystories in memory

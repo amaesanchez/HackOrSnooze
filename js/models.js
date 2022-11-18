@@ -1,7 +1,6 @@
 "use strict";
 
 const BASE_URL = "https://hack-or-snooze-v3.herokuapp.com";
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNoZWVzZSIsImlhdCI6MTY2ODcwNzc3MH0.WbagBZU4GNP-KFSsKKqVVor5QYLWAZDBYciZAHK0204"
 
 /******************************************************************************
  * Story: a single story in the system
@@ -29,6 +28,21 @@ class Story {
     fullUrl.href = this.url;
     return fullUrl.hostname;
   }
+
+  static async getFavoriteStory(id) {
+
+    // let storyIDList =storyList.stories.filter(s => s.storyID === "0504ff1a-4ee0-4d4c-be0f-382dec13266c")
+    // console.log("storyIDList", storyIDList);
+
+    for (let story of storyList.stories) {
+      if (story.storyId === id) {
+        console.log("story", story);
+        return story;
+      }
+    }
+
+  }
+
 }
 
 
@@ -121,20 +135,29 @@ class User {
   }
 
   /** add favorite story to local favoite story list */
-  addFavorite(story) {
+  async addFavorite(story) {
+    const response = await axios.post(`${BASE_URL}/users/${currentUser.username}/favorites/${story.storyId}`,
+    {
+      "token": this.loginToken
+    });
     this.favorites.push(story);
     console.log("favorite", this.favorites);
   }
 
-  // async function removeFavorite(story) {
-  //   // TODO: get index of favorite and remove from story list
+  async function removeFavorite(story) {
+    // TODO: get index of favorite and remove from story list
 
+    const response = await axios.delete(`${BASE_URL}/users/${currentUser.username}/favorites/${story.storyId}`,
+    {
+      "token": this.loginToken
+    });
 
-  // }
+    // let idx = this.favorites.findIndex(s => s.storyId === story.storyId)
+    const index = this.favorites.indexOf(story);
+    const storyToDelete = this.favorites.splice(index, 1);
+    //use splice to remove from this.favorites
 
-
-
-
+  }
 
   /** Register new user in API, make User instance & return it.
    *

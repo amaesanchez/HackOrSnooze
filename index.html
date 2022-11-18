@@ -34,9 +34,14 @@
   <div class="navbar-brand">
     <a class="nav-link" href="#" id="nav-all">Hack or Snooze</a>
   </div>
-  <a class="nav-link" href="#" id="nav-submit">| submit |</a>
-  <a class="nav-link" href="#" id="nav-favorites"> favorites | </a>
-  <a class="nav-link" href="#" id="nav-my-stories"> my stories </a>
+    <div id="nav-user-links">
+      |
+      <a class="nav-link" href="#" id="nav-submit"> submit </a>
+      |
+      <a class="nav-link" href="#" id="nav-favorites"> favorites </a>
+      |
+      <a class="nav-link" href="#" id="nav-my-stories"> my stories </a>
+    </div>
   <div class="nav-right">
     <a class="nav-link" href="#" id="nav-login">login/signup</a>
     <a class="nav-link" href="#" id="nav-user-profile"></a>
@@ -64,7 +69,7 @@
 
 <section class="container stories-container" id="favorites-container">
     <!-- List of all favorited stories -->
-  <ol id="all-favorites-list" class="stories-list"></ol>
+  <ol id="all-favorites-list" class="stories-list hidden"></ol>
 
 </section>
 
