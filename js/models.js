@@ -121,12 +121,9 @@ class User {
   }
 
   /** add favorite story to local favoite story list */
- addFavorite(story) {
-
-
-
+  addFavorite(story) {
     this.favorites.push(story);
-
+    console.log("favorite", this.favorites);
   }
 
   // async function removeFavorite(story) {

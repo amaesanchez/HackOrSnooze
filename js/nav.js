@@ -1,7 +1,18 @@
 "use strict";
 
 const $navSubmit = $("#nav-submit");
+const $navFavorite = $("#nav-favorites");
 
+
+//TODO: create event listener for my stories tab
+
+function navOnFavorites(evt) {
+  evt.preventDefault();
+  hidePageComponents();
+  $allFavoritesList.show();
+}
+
+$navFavorite.on("click", navOnFavorites);
 
 /** on click of submit link in navbar
  * hides page components and reveals new story form

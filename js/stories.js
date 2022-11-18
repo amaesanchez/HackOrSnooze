@@ -15,20 +15,6 @@ async function addAndShowStoryOnSubmit(evt) {
     url: $("#story-url").val()
   };
 
-  // not sure if currentUser.username is what's used here
-  // const response = await axios.get(`${BASE_URL}/users/${currentUser.username}`,
-  //   {params:{token}});
-
-  // const userInfo = {
-  //   username: response.data.user.username,
-  //   name: response.data.user.name,
-  //   createdAt: response.data.user.createdAt,
-  //   favorites: response.data.user.favorites,
-  //   stories: response.data.user.stories
-  // }
-
-  // const user = new User(userInfo, token);
-
   const storyIns = await storyList.addStory(currentUser, newStory);
 
   const $storyHTML = generateStoryMarkup(storyIns);
@@ -90,11 +76,27 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
+/** on click of favorites button
+ * add story instance to favorites list in memory
+ * and append in favorite page on DOM
+ */
+
+// TODO: figure out how to get story ins from evt
+// TODO: figure out how to toggle between addFavorite() & removeFavorite()
+
 async function toggleFavorite(evt) {
   evt.preventDefault();
-  console.log("evt.target", evt.target);
-  // currentUser.add()
+  console.log("storylist.stories", storyList.stories);
+  currentUser.addFavorite(storyList.stories[1])
 
+  const $parent = $(evt.target).closest("li");
+  console.log($parent);
+  $allFavoritesList.append($parent);
 }
 
 $allStoriesList.on("click", "button", toggleFavorite);
+
+
+/** TODO: create function to add stories to mystories in memory
+ * add mystories to DOM
+*/
