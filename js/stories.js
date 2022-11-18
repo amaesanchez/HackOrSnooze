@@ -84,31 +84,45 @@ function putStoriesOnPage() {
 // TODO: figure out how to get story ins from evt
 // TODO: figure out how to toggle between addFavorite() & removeFavorite()
 
-async function addToFavorite(evt) {
+// async function addToFavorite(evt) {
+//   evt.preventDefault();
+//   const favoriteID = $(evt.target).parent().attr("id");
+//   const favoriteStory = await Story.getFavoriteStory(favoriteID);
+//   console.log("favoriteID", favoriteID);
+//   currentUser.addFavorite(favoriteStory);
+// }
+
+// function handleFavorite(evt) {
+//   evt.preventDefault();
+//   showFavorite(evt);
+//   addToFavorite(evt);
+
+// }
+
+async function toggleFavorite(evt) {
   evt.preventDefault();
   const favoriteID = $(evt.target).parent().attr("id");
-  const favoriteStory = await Story.getFavoriteStory(favoriteID);
-  console.log("favoriteID", favoriteID);
-  currentUser.addFavorite(favoriteStory);
+
+  if ($(evt.target).hasClass("bi-star")) {
+    $(evt.target).removeClass("bi-star").addClass("bi-star-fill");
+    const favoriteStory = await Story.getFavoriteStory(favoriteID);
+    let addFav = await currentUser.addFavorite(favoriteStory);
+
+    const $parent = $(evt.target).closest("li").clone();
+    $allFavoritesList.append($parent);
+  } else {
+    $(evt.target).removeClass("bi-star-fill").addClass("bi-star");
+    const unFavoriteStory = await Story.getFavoriteStory(favoriteID);
+    let remFav = await currentUser.removeFavorite(unFavoriteStory);
+
+    const $parent = $(evt.target).closest("li");
+    $allFavoritesList.remove($parent);
+  }
 
 }
 
-function handleFavorite(evt) {
-  evt.preventDefault();
-  showFavorite(evt);
-  addToFavorite(evt);
+$allStoriesList.on("click", "i", toggleFavorite);
 
-}
-
-function showFavorite(evt) {
-  evt.target.classList.remove("bi-star");
-  evt.target.classList.add("bi-star-fill");
-  const $parent = $(evt.target).closest("li").clone();
-  console.log($parent);
-  $allFavoritesList.append($parent);
-}
-
-$allStoriesList.on("click", "i", handleFavorite);
 
 
 /** TODO: create function to add stories to mystories in memory

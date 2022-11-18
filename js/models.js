@@ -29,14 +29,9 @@ class Story {
     return fullUrl.hostname;
   }
 
-  static async getFavoriteStory(id) {
-
-    // let storyIDList =storyList.stories.filter(s => s.storyID === "0504ff1a-4ee0-4d4c-be0f-382dec13266c")
-    // console.log("storyIDList", storyIDList);
-
+  static getFavoriteStory(id) {
     for (let story of storyList.stories) {
       if (story.storyId === id) {
-        console.log("story", story);
         return story;
       }
     }
@@ -96,7 +91,6 @@ class StoryList {
     });
 
     const newStoryIns = new Story(response.data.story);
-    console.log("addStory story", newStoryIns);
     this.stories.unshift(newStoryIns);
     return newStoryIns;
   }
@@ -141,21 +135,18 @@ class User {
       "token": this.loginToken
     });
     this.favorites.push(story);
-    console.log("favorite", this.favorites);
   }
 
-  async function removeFavorite(story) {
+  async removeFavorite(story) {
     // TODO: get index of favorite and remove from story list
 
-    const response = await axios.delete(`${BASE_URL}/users/${currentUser.username}/favorites/${story.storyId}`,
-    {
-      "token": this.loginToken
+    const response = await axios ({
+      url:`${BASE_URL}/users/${currentUser.username}/favorites/${story.storyId}`,
+      method: "DELETE",
+      data: {"token": this.loginToken}
     });
 
-    // let idx = this.favorites.findIndex(s => s.storyId === story.storyId)
-    const index = this.favorites.indexOf(story);
-    const storyToDelete = this.favorites.splice(index, 1);
-    //use splice to remove from this.favorites
+    this.favorites = this.favorites.filter(s => s.storyId !== story.storyId);
 
   }
 
