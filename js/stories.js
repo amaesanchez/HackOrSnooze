@@ -50,11 +50,11 @@ function generateStoryMarkup(story) {
 
   let starClass = currentUser && currentUser.isFavorite(story) ? "bi-star-fill" : "bi-star";
 
+  // <i class="bi ${starClass}"></i>
   const hostName = story.getHostName();
-
   return $(`
       <li id="${story.storyId}">
-        <i class="bi ${starClass}"></i>
+        ${currentUser ? `<i class="bi ${starClass}"></i>` : ''}
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
