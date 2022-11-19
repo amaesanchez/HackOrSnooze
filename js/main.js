@@ -47,7 +47,6 @@ async function start() {
   await getAndShowStoriesOnStart();
 
   // hide buttons??
-  $favoriteBtn.hide();
 
   // if we got a logged-in user
   if (currentUser) updateUIOnUserLogin();

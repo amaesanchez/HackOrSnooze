@@ -48,12 +48,10 @@ async function getAndShowStoriesOnStart() {
 function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
 
-  let starClass = "bi-star";
-  if (currentUser && currentUser.isFavorite(story)) {
-    starClass = "bi-star-fill";
-  }
+  let starClass = currentUser && currentUser.isFavorite(story) ? "bi-star-fill" : "bi-star";
 
   const hostName = story.getHostName();
+
   return $(`
       <li id="${story.storyId}">
         <i class="bi ${starClass}"></i>
@@ -106,7 +104,6 @@ async function toggleFavorite(evt) {
   }
 }
 
-
 /** appends user's favorite stories to Favorites tab in DOM */
 
 function putFavoritesOnPage() {
@@ -118,7 +115,6 @@ function putFavoritesOnPage() {
     $allFavoritesList.append($story);
   }
 }
-
 
 $("body").on("click", "i", toggleFavorite);
 
