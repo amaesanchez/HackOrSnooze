@@ -4,11 +4,15 @@ const $navSubmit = $("#nav-submit");
 const $navFavorite = $("#nav-favorites");
 
 
-//TODO: create event listener for my stories tab
+/** on click of favorites link in navbar
+ * hides page components, and shows favorites area with favorite
+ * stories on page
+ */
 
 function navOnFavorites(evt) {
   evt.preventDefault();
   hidePageComponents();
+  putFavoritesOnPage();
   $allFavoritesList.show();
 }
 

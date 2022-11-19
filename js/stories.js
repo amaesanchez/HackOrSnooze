@@ -7,6 +7,7 @@ let storyList;
 /** gets story form data and prepends story to storylist
  * and stories area in DOM
  */
+
 async function addAndShowStoryOnSubmit(evt) {
   evt.preventDefault();
   const newStory = {
@@ -39,6 +40,7 @@ async function getAndShowStoriesOnStart() {
 /**
  * A render method to render HTML for an individual Story instance
  * - story: an instance of Story
+ * - favorite button's class is dependent on whether story is in favorites list
  *
  * Returns the markup for the story.
  */
@@ -46,10 +48,15 @@ async function getAndShowStoriesOnStart() {
 function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
 
+  let starClass = "bi-star";
+  if (currentUser && currentUser.isFavorite(story)) {
+    starClass = "bi-star-fill";
+  }
+
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
-        <i class="bi bi-star"></i>
+        <i class="bi ${starClass}"></i>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -60,7 +67,8 @@ function generateStoryMarkup(story) {
     `);
 }
 
-/** Gets list of stories from server, generates their HTML, and puts on page. */
+/** Gets list of stories from server,
+ * generates their HTML, and puts on page. */
 
 function putStoriesOnPage() {
   console.debug("putStoriesOnPage");
@@ -76,28 +84,11 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
-/** on click of favorites button
+
+/** on click of favorites button,
+ * change button to fill in main stories tab,
  * add story instance to favorites list in memory
- * and append in favorite page on DOM
  */
-
-// TODO: figure out how to get story ins from evt
-// TODO: figure out how to toggle between addFavorite() & removeFavorite()
-
-// async function addToFavorite(evt) {
-//   evt.preventDefault();
-//   const favoriteID = $(evt.target).parent().attr("id");
-//   const favoriteStory = await Story.getFavoriteStory(favoriteID);
-//   console.log("favoriteID", favoriteID);
-//   currentUser.addFavorite(favoriteStory);
-// }
-
-// function handleFavorite(evt) {
-//   evt.preventDefault();
-//   showFavorite(evt);
-//   addToFavorite(evt);
-
-// }
 
 async function toggleFavorite(evt) {
   evt.preventDefault();
@@ -106,22 +97,30 @@ async function toggleFavorite(evt) {
   if ($(evt.target).hasClass("bi-star")) {
     $(evt.target).removeClass("bi-star").addClass("bi-star-fill");
     const favoriteStory = await Story.getFavoriteStory(favoriteID);
-    let addFav = await currentUser.addFavorite(favoriteStory);
+    await currentUser.addFavorite(favoriteStory);
 
-    const $parent = $(evt.target).closest("li").clone();
-    $allFavoritesList.append($parent);
   } else {
     $(evt.target).removeClass("bi-star-fill").addClass("bi-star");
     const unFavoriteStory = await Story.getFavoriteStory(favoriteID);
-    let remFav = await currentUser.removeFavorite(unFavoriteStory);
-
-    const $parent = $(evt.target).closest("li");
-    $allFavoritesList.remove($parent);
+    await currentUser.removeFavorite(unFavoriteStory);
   }
-
 }
 
-$allStoriesList.on("click", "i", toggleFavorite);
+
+/** appends user's favorite stories to Favorites tab in DOM */
+
+function putFavoritesOnPage() {
+  console.debug("putFavoritesOnPage");
+  $allFavoritesList.empty();
+
+  for (let story of currentUser.favorites) {
+    const $story = generateStoryMarkup(story);
+    $allFavoritesList.append($story);
+  }
+}
+
+
+$("body").on("click", "i", toggleFavorite);
 
 
 

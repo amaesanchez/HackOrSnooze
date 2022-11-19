@@ -29,13 +29,14 @@ class Story {
     return fullUrl.hostname;
   }
 
+  /** returns story instance associated with given story id */
+
   static getFavoriteStory(id) {
     for (let story of storyList.stories) {
       if (story.storyId === id) {
         return story;
       }
     }
-
   }
 
 }
@@ -128,7 +129,8 @@ class User {
 
   }
 
-  /** add favorite story to local favoite story list */
+  /** add favorite story to local favorite story list */
+
   async addFavorite(story) {
     const response = await axios.post(`${BASE_URL}/users/${currentUser.username}/favorites/${story.storyId}`,
     {
@@ -137,9 +139,9 @@ class User {
     this.favorites.push(story);
   }
 
-  async removeFavorite(story) {
-    // TODO: get index of favorite and remove from story list
+  /** removes given story from user's favorite story list */
 
+  async removeFavorite(story) {
     const response = await axios ({
       url:`${BASE_URL}/users/${currentUser.username}/favorites/${story.storyId}`,
       method: "DELETE",
@@ -147,7 +149,19 @@ class User {
     });
 
     this.favorites = this.favorites.filter(s => s.storyId !== story.storyId);
+  }
 
+  /** checks if story is already in favorites list
+   * returns boolean
+  */
+
+  isFavorite(story) {
+    for (let favStory of this.favorites) {
+      if (favStory.storyId === story.storyId) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /** Register new user in API, make User instance & return it.

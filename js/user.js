@@ -111,6 +111,10 @@ function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
 
   $allStoriesList.show();
+  $navLinks.show();
+  $favoriteBtn.show();
+
+  putFavoritesOnPage();
 
   updateNavOnLogin();
 }
