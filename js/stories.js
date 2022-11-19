@@ -47,10 +47,8 @@ async function getAndShowStoriesOnStart() {
 
 function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
-
   let starClass = currentUser && currentUser.isFavorite(story) ? "bi-star-fill" : "bi-star";
 
-  // <i class="bi ${starClass}"></i>
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
@@ -70,7 +68,6 @@ function generateStoryMarkup(story) {
 
 function putStoriesOnPage() {
   console.debug("putStoriesOnPage");
-
   $allStoriesList.empty();
 
   // loop through all of our stories and generate HTML for them
@@ -81,7 +78,6 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
-
 
 /** on click of favorites button,
  * change button to fill in main stories tab,
