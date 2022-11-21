@@ -112,9 +112,9 @@ function updateUIOnUserLogin() {
 
   $allStoriesList.show();
   $navLinks.show();
-  $favoriteBtn.show();
 
   putFavoritesOnPage();
+  putOwnStoriesOnPage();
 
   updateNavOnLogin();
 }

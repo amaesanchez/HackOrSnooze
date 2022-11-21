@@ -164,6 +164,10 @@ class User {
     return false;
   }
 
+  async addOwnStory(story) {
+    this.ownStories.push(story);
+  }
+
   /** Register new user in API, make User instance & return it.
    *
    * - username: a new username

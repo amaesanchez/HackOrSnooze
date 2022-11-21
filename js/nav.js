@@ -2,6 +2,18 @@
 
 const $navSubmit = $("#nav-submit");
 const $navFavorite = $("#nav-favorites");
+const $navMyStories = $("#nav-my-stories")
+
+
+function navMyStories(evt) {
+  console.log(evt);
+  evt.preventDefault();
+  hidePageComponents();
+  putOwnStoriesOnPage();
+  $allOwnStoriesList.show();
+}
+
+$navMyStories.on("click", navMyStories);
 
 
 /** on click of favorites link in navbar
@@ -10,6 +22,7 @@ const $navFavorite = $("#nav-favorites");
  */
 
 function navOnFavorites(evt) {
+  console.log(evt);
   evt.preventDefault();
   hidePageComponents();
   putFavoritesOnPage();

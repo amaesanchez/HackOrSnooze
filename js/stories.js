@@ -17,6 +17,7 @@ async function addAndShowStoryOnSubmit(evt) {
   };
 
   const storyIns = await storyList.addStory(currentUser, newStory);
+  await currentUser.addOwnStory(storyIns);
 
   const $storyHTML = generateStoryMarkup(storyIns);
 
@@ -116,6 +117,17 @@ $("body").on("click", "i", toggleFavorite);
 
 
 
-/** TODO: create function to add stories to mystories in memory
+/** to add stories to mystories in memory
  * add mystories to DOM
 */
+
+function putOwnStoriesOnPage() {
+  $allOwnStoriesList.empty();
+
+  for (let story of currentUser.ownStories) {
+    const $story = generateStoryMarkup(story);
+    $allOwnStoriesList.append($story);
+  }
+}
+
+//debug: does not show up on refresh
